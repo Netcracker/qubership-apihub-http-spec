@@ -8,10 +8,6 @@ import { ArrayCallbackParameters, Fragment } from '../../types';
 import { entries, pickKeptProperties } from '../../utils';
 import type { Oas3WithMetaTranslateFunction } from '../types';
 import { translateHeaderObject } from './headers';
-import { translateToDefaultExample } from '../../oas/transformers/examples';
-import { translateToExample } from './examples';
-import { JSONSchema7, JSONSchema7Array } from 'json-schema';
-import { translateSchemaObject } from '../../oas/transformers';
 
 const ACCEPTABLE_STYLES: (string | undefined)[] = [
   HttpParamStyles.Form,
@@ -63,14 +59,6 @@ const translateEncodingPropertyObject = withContext<
   };
 });
 
-const translateSchemaMediaTypeObject = withContext<
-  Oas3WithMetaTranslateFunction<[schema: unknown], Optional<JSONSchema7>>
->(function (schema) {
-  if (!isPlainObject(schema)) return;
-
-  return translateSchemaObject.call(this, schema);
-});
-
 export const translateMediaTypeObject = withContext<
   Oas3WithMetaTranslateFunction<
     ArrayCallbackParameters<[mediaType: string, mediaObject: unknown]>,
@@ -80,18 +68,12 @@ export const translateMediaTypeObject = withContext<
   if (!isPlainObject(mediaObject)) return;
 
   const id = this.generateId.httpMedia({ mediaType });
-  const { schema, encoding, examples } = mediaObject;
-  const jsonSchema = translateSchemaMediaTypeObject.call(this, schema);
-  const defaultExample = 'example' in mediaObject ? mediaObject.example : (jsonSchema?.examples as JSONSchema7Array)?.[0];
+  const { schema, encoding } = mediaObject;
 
   return {
     id,
     mediaType,
     // Note that I'm assuming all references are resolved
-    examples: [
-      defaultExample !== undefined ? translateToDefaultExample.call(this, 'default', defaultExample) : undefined,
-      ...entries(examples).map(translateToExample, this),
-    ].filter(isNonNullable),
     encodings: entries(encoding).map(translateEncodingPropertyObject, this).filter(isNonNullable),
 
     ...pickBy(

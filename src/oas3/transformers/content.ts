@@ -8,6 +8,11 @@ import { ArrayCallbackParameters, Fragment } from '../../types';
 import { entries } from '../../utils';
 import type { Oas3TranslateFunction } from '../types';
 import { translateHeaderObject } from './headers';
+import type { Oas3WithMetaTranslateFunction } from '../../oas3WithMeta/types'
+import { JSONSchema7, JSONSchema7Array } from 'json-schema'
+import { translateToDefaultExample } from '../../oas/transformers/examples'
+import { translateToExample } from '../../oas3WithMeta/transformers/examples'
+import { translateSchemaObject } from '../../oas/transformers'
 
 const ACCEPTABLE_STYLES: (string | undefined)[] = [
   HttpParamStyles.Form,
@@ -59,8 +64,16 @@ const translateEncodingPropertyObject = withContext<
   };
 });
 
+const translateSchemaMediaTypeObject = withContext<
+  Oas3WithMetaTranslateFunction<[schema: unknown], Optional<JSONSchema7>>
+>(function (schema) {
+  if (!isPlainObject(schema)) return;
+
+  return translateSchemaObject.call(this, schema);
+});
+
 export const translateMediaTypeObject = withContext<
-  Oas3TranslateFunction<
+  Oas3WithMetaTranslateFunction<
     ArrayCallbackParameters<[mediaType: string, mediaObject: unknown]>,
     Optional<IMediaTypeContent<true>>
   >
@@ -68,13 +81,18 @@ export const translateMediaTypeObject = withContext<
   if (!isPlainObject(mediaObject)) return;
 
   const id = this.generateId.httpMedia({ mediaType });
-  const { schema, encoding } = mediaObject;
-
+  const { schema, encoding, examples } = mediaObject;
+  const jsonSchema = translateSchemaMediaTypeObject.call(this, schema);
+  const defaultExample = 'example' in mediaObject ? mediaObject.example : (jsonSchema?.examples as JSONSchema7Array)?.[0];
 
   return {
     id,
     mediaType,
     // Note that I'm assuming all references are resolved
+    examples: [
+      defaultExample !== undefined ? translateToDefaultExample.call(this, 'default', defaultExample) : undefined,
+      ...entries(examples).map(translateToExample, this),
+    ].filter(isNonNullable),
     encodings: entries(encoding).map(translateEncodingPropertyObject, this).filter(isNonNullable),
 
     ...pickBy(
