@@ -8,7 +8,6 @@ import { ArrayCallbackParameters, Fragment } from '../../types';
 import { entries } from '../../utils';
 import type { Oas3TranslateFunction } from '../types';
 import { translateHeaderObject } from './headers';
-import type { Oas3WithMetaTranslateFunction } from '../../oas3WithMeta/types'
 import { JSONSchema7, JSONSchema7Array } from 'json-schema'
 import { translateToDefaultExample } from '../../oas/transformers/examples'
 import { translateToExample } from '../../oas3WithMeta/transformers/examples'
@@ -65,7 +64,7 @@ const translateEncodingPropertyObject = withContext<
 });
 
 const translateSchemaMediaTypeObject = withContext<
-  Oas3WithMetaTranslateFunction<[schema: unknown], Optional<JSONSchema7>>
+  Oas3TranslateFunction<[schema: unknown], Optional<JSONSchema7>>
 >(function (schema) {
   if (!isPlainObject(schema)) return;
 
@@ -73,7 +72,7 @@ const translateSchemaMediaTypeObject = withContext<
 });
 
 export const translateMediaTypeObject = withContext<
-  Oas3WithMetaTranslateFunction<
+  Oas3TranslateFunction<
     ArrayCallbackParameters<[mediaType: string, mediaObject: unknown]>,
     Optional<IMediaTypeContent<true>>
   >
