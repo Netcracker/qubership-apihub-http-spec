@@ -80,6 +80,8 @@ export const translateMediaTypeObject = withContext<
     id,
     mediaType,
     // Note that I'm assuming all references are resolved
+
+    // Examples are necessary here, because they are used in REST Playground (panel "Examples" on Operation Page)
     examples: [
       defaultExample !== undefined ? translateToDefaultExample.call(this, 'default', defaultExample) : undefined,
       ...entries(examples).map(translateToExample, this),
