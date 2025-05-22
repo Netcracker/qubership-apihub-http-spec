@@ -63,14 +63,6 @@ const translateEncodingPropertyObject = withContext<
   };
 });
 
-const translateSchemaMediaTypeObject = withContext<
-  Oas3TranslateFunction<[schema: unknown], Optional<JSONSchema7>>
->(function (schema) {
-  if (!isPlainObject(schema)) return;
-
-  return translateSchemaObject.call(this, schema);
-});
-
 export const translateMediaTypeObject = withContext<
   Oas3TranslateFunction<
     ArrayCallbackParameters<[mediaType: string, mediaObject: unknown]>,
@@ -81,7 +73,7 @@ export const translateMediaTypeObject = withContext<
 
   const id = this.generateId.httpMedia({ mediaType });
   const { schema, encoding, examples } = mediaObject;
-  const jsonSchema = translateSchemaMediaTypeObject.call(this, schema);
+  const jsonSchema = translateSchemaObject.call(this, schema);
   const defaultExample = 'example' in mediaObject ? mediaObject.example : (jsonSchema?.examples as JSONSchema7Array)?.[0];
 
   return {
