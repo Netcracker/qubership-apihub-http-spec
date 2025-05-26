@@ -76,6 +76,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "sl-scripts build",
+    "development:link": "npm link",
     "lint": "eslint 'src/**/*.ts'",
     "lint.fix": "npm lint --fix",
     "release": "sl-scripts release",
