@@ -1,5 +1,6 @@
 import type { IHttpOperationResponse, Optional, Reference } from '@stoplight/types'
 import { IMediaTypeContent } from '@stoplight/types'
+import pickBy from 'lodash.pickby'
 import { CustomResponseObject } from 'openapi3-ts'
 
 import { withContext } from '../../context'
@@ -12,7 +13,6 @@ import { isObject, isResponseObject } from '../guards'
 import { Oas3WithMetaTranslateFunction } from '../types'
 import { translateMediaTypeObject } from './content'
 import { translateHeaderObject } from './headers'
-import pickBy = require('lodash.pickby')
 
 export const translateToResponse = withContext<
   Oas3WithMetaTranslateFunction<

@@ -8,6 +8,7 @@ import type {
   Reference,
 } from '@stoplight/types';
 import { HttpParamStyles, IMediaTypeContent } from '@stoplight/types';
+import pickBy from 'lodash.pickby';
 import type { CustomRequestBodyObject, ParameterObject } from 'openapi3-ts';
 
 import { withContext } from '../../context';
@@ -17,6 +18,7 @@ import { createOasParamsIterator } from '../../oas/accessors';
 import { isReferenceObject, isValidParamStyle } from '../../oas/guards';
 import { getComponentName, getSharedKey, syncReferenceObject } from '../../oas/resolver';
 import { entries, pickKeptProperties } from '../../utils';
+import { mirrorDiffMetaKey, mirrorSelfDiffMetaKey } from '../consts';
 import { isObject, isRequestBodyObject } from '../guards';
 import {
   Oas3WithMetaTranslateFunction,
@@ -26,8 +28,6 @@ import {
   ParametersDiffMetaData,
 } from '../types';
 import { translateMediaTypeObject } from './content';
-import pickBy = require('lodash.pickby');
-import { mirrorDiffMetaKey, mirrorSelfDiffMetaKey } from '../consts';
 
 export const translateRequestBody = withContext<
   Oas3WithMetaTranslateFunction<
