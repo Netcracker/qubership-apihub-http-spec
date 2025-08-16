@@ -8,7 +8,6 @@ import type {
   Reference,
 } from '@stoplight/types';
 import { HttpParamStyles } from '@stoplight/types';
-import pickBy from 'lodash.pickby';
 import type { ParameterObject } from 'openapi3-ts';
 
 import { withContext } from '../../context';
@@ -21,6 +20,7 @@ import { entries } from '../../utils';
 import { isRequestBodyObject } from '../guards';
 import { Oas3TranslateFunction } from '../types';
 import { translateMediaTypeObject } from './content';
+import pickBy = require('lodash.pickby');
 
 export const translateRequestBody = withContext<
   Oas3TranslateFunction<

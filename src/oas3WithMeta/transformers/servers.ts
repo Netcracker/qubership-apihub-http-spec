@@ -1,5 +1,5 @@
 import type { INodeVariable, IServer, Optional } from '@stoplight/types';
-import pickBy from 'lodash.pickby';
+import pickBy = require('lodash.pickby');
 
 import { withContext } from '../../context';
 import { isNonNullable, isString } from '../../guards';

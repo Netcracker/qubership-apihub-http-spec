@@ -1,17 +1,17 @@
 import { isPlainObject } from '@stoplight/json';
 import { HttpParamStyles, IHttpEncoding, IMediaTypeContent, Optional } from '@stoplight/types';
-import { JSONSchema7Array } from 'json-schema'
-import pickBy from 'lodash.pickby';
+import pickBy = require('lodash.pickby');
 
 import { withContext } from '../../context';
 import { isBoolean, isNonNullable, isString } from '../../guards';
-import { translateSchemaObject } from '../../oas/transformers'
-import { translateToDefaultExample } from '../../oas/transformers/examples'
-import { translateToExample } from '../../oas3WithMeta/transformers/examples'
 import { ArrayCallbackParameters, Fragment } from '../../types';
 import { entries } from '../../utils';
 import type { Oas3TranslateFunction } from '../types';
 import { translateHeaderObject } from './headers';
+import { JSONSchema7, JSONSchema7Array } from 'json-schema'
+import { translateToDefaultExample } from '../../oas/transformers/examples'
+import { translateToExample } from '../../oas3WithMeta/transformers/examples'
+import { translateSchemaObject } from '../../oas/transformers'
 
 const ACCEPTABLE_STYLES: (string | undefined)[] = [
   HttpParamStyles.Form,

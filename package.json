@@ -1,6 +1,6 @@
 {
   "name": "@netcracker/qubership-apihub-http-spec",
-  "version": "5.5.9-feature-resolve-imports",
+  "version": "5.5.9",
   "description": "",
   "keywords": [],
   "sideEffects": false,
@@ -12,86 +12,72 @@
   "engines": {
     "node": ">=14.13"
   },
-  "type": "module",
-  "main": "./dist/cjs/index.js",
-  "types": "./dist/types/index.d.ts",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./generators": {
-      "types": "./dist/types/generators.d.ts",
-      "import": "./dist/esm/generators.js",
-      "require": "./dist/cjs/generators.js"
+      "types": "./dist/generators.d.ts",
+      "default": "./dist/generators.js"
     },
     "./hash": {
-      "types": "./dist/types/hash.d.ts",
-      "import": "./dist/esm/hash.js",
-      "require": "./dist/cjs/hash.js"
+      "types": "./dist/hash.d.ts",
+      "default": "./dist/hash.js"
     },
     "./oas": {
-      "types": "./dist/types/oas/index.d.ts",
-      "import": "./dist/esm/oas/index.js",
-      "require": "./dist/cjs/oas/index.js"
+      "types": "./dist/oas/index.d.ts",
+      "default": "./dist/oas/index.js"
     },
     "./oas2": {
-      "types": "./dist/types/oas2/index.d.ts",
-      "import": "./dist/esm/oas2/index.js",
-      "require": "./dist/cjs/oas2/index.js"
+      "types": "./dist/oas2/index.d.ts",
+      "default": "./dist/oas2/index.js"
     },
     "./oas2/operation": {
-      "types": "./dist/types/oas2/operation.d.ts",
-      "import": "./dist/esm/oas2/operation.js",
-      "require": "./dist/cjs/oas2/operation.js"
+      "types": "./dist/oas2/operation.d.ts",
+      "default": "./dist/oas2/operation.js"
     },
     "./oas3": {
-      "types": "./dist/types/oas3/index.d.ts",
-      "import": "./dist/esm/oas3/index.js",
-      "require": "./dist/cjs/oas3/index.js"
+      "types": "./dist/oas3/index.d.ts",
+      "default": "./dist/oas3/index.js"
     },
     "./oas3/operation": {
-      "types": "./dist/types/oas3/operation.d.ts",
-      "import": "./dist/esm/oas3/operation.js",
-      "require": "./dist/cjs/oas3/operation.js"
+      "types": "./dist/oas3/operation.d.ts",
+      "default": "./dist/oas3/operation.js"
     },
     "./postman": {
-      "types": "./dist/types/postman/index.d.ts",
-      "import": "./dist/esm/postman/index.js",
-      "require": "./dist/cjs/postman/index.js"
+      "types": "./dist/postman/index.d.ts",
+      "default": "./dist/postman/index.js"
     },
     "./postman/operation": {
-      "types": "./dist/types/postman/operation.d.ts",
-      "import": "./dist/esm/postman/operation.js",
-      "require": "./dist/cjs/postman/operation.js"
+      "types": "./dist/postman/operation.d.ts",
+      "default": "./dist/postman/operation.js"
     },
     "./asyncapi": {
-      "types": "./dist/types/asyncapi/index.d.ts",
-      "import": "./dist/esm/asyncapi/index.js",
-      "require": "./dist/cjs/asyncapi/index.js"
+      "types": "./dist/asyncapi/index.d.ts",
+      "default": "./dist/asyncapi/index.js"
     },
     "./asyncapi/operation": {
-      "types": "./dist/types/asyncapi/operation.d.ts",
-      "import": "./dist/esm/asyncapi/operation.js",
-      "require": "./dist/cjs/asyncapi/operation.js"
+      "types": "./dist/asyncapi/operation.d.ts",
+      "default": "./dist/asyncapi/operation.js"
     },
     "./oas3WithMeta": {
-      "types": "./dist/types/oas3WithMeta/index.d.ts",
-      "import": "./dist/esm/oas3WithMeta/index.js",
-      "require": "./dist/cjs/oas3WithMeta/index.js"
+      "types": "./dist/oas3WithMeta/index.d.ts",
+      "default": "./dist/oas3WithMeta/index.js"
     },
     "./oas3WithMeta/operation": {
-      "types": "./dist/types/oas3WithMeta/operation.d.ts",
-      "import": "./dist/esm/oas3WithMeta/operation.js",
-      "require": "./dist/cjs/oas3WithMeta/operation.js"
+      "types": "./dist/oas3WithMeta/operation.d.ts",
+      "default": "./dist/oas3WithMeta/operation.js"
     }
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json && tsc -p tsconfig.json --declaration --emitDeclarationOnly --outDir dist/types",
-    "lint": "eslint src/**/*.ts",
-    "lint.fix": "npm run lint --fix",
+    "build": "sl-scripts build",
+    "lint": "eslint 'src/**/*.ts'",
+    "lint.fix": "npm lint --fix",
     "release": "sl-scripts release",
     "release.dryRun": "sl-scripts release --dry-run --debug",
     "test:skip": "jest",
@@ -140,7 +126,7 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "npm run lint --fix"
+      "npm eslint --fix"
     ]
   },
   "husky": {
@@ -160,48 +146,5 @@
   },
   "release": {
     "extends": "@stoplight/scripts/release"
-  },
-  "typesVersions": {
-    ">=4.7": {
-      "generators": [
-        "./dist/types/generators.d.ts"
-      ],
-      "hash": [
-        "./dist/types/hash.d.ts"
-      ],
-      "oas": [
-        "./dist/types/oas/index.d.ts"
-      ],
-      "oas2": [
-        "./dist/types/oas2/index.d.ts"
-      ],
-      "oas2/operation": [
-        "./dist/types/oas2/operation.d.ts"
-      ],
-      "oas3": [
-        "./dist/types/oas3/index.d.ts"
-      ],
-      "oas3/operation": [
-        "./dist/types/oas3/operation.d.ts"
-      ],
-      "postman": [
-        "./dist/types/postman/index.d.ts"
-      ],
-      "postman/operation": [
-        "./dist/types/postman/operation.d.ts"
-      ],
-      "asyncapi": [
-        "./dist/types/asyncapi/index.d.ts"
-      ],
-      "asyncapi/operation": [
-        "./dist/types/asyncapi/operation.d.ts"
-      ],
-      "oas3WithMeta": [
-        "./dist/types/oas3WithMeta/index.d.ts"
-      ],
-      "oas3WithMeta/operation": [
-        "./dist/types/oas3WithMeta/operation.d.ts"
-      ]
-    }
   }
 }

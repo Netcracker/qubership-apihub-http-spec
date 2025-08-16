@@ -1,5 +1,5 @@
 import type { DeepPartial, IHttpOperationResponse, IMediaTypeContent, Optional } from '@stoplight/types';
-import pickBy from 'lodash.pickby';
+import pickBy = require('lodash.pickby');
 import type { Operation, Reference } from 'swagger-schema-official';
 
 import { withContext } from '../../context';

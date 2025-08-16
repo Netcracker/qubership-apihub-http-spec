@@ -1,7 +1,8 @@
 import type { IServer, Optional } from '@stoplight/types';
-import pickBy from 'lodash.pickby';
 
 import { withContext } from '../../context';
+import pickBy = require('lodash.pickby');
+
 import { isNonNullable, isString } from '../../guards';
 import { ArrayCallbackParameters } from '../../types';
 import { isValidScheme } from '../guards';

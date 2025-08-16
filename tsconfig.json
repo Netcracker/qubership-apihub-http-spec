@@ -1,12 +1,11 @@
 {
   "extends": "@stoplight/scripts/tsconfig.json",
+  // target all ts files
   "include": [
-    "src"
+    "."
   ],
   "compilerOptions": {
     "module": "commonjs",
-    "noUnusedLocals": false,
-    "outDir": "./dist/cjs",
-    "esModuleInterop": true
+    "noUnusedLocals": false
   }
 }
