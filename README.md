@@ -46,6 +46,6 @@ The strategy is the following:
 
 ### Merging strategy highlights
 
-- Conflicting examples will make the merger relax the constraints. That means e.g. if a header is required in one request and not required in another one then the resulting operation will _not_ require that header to be present.
+- Conflicting examples will make the merger relax the constraints. That means e.g. if a header is required in one request and not required in another one then the resulting operation will *not* require that header to be present.
 - Different JSON Schemas are coupled with `anyOf`.
 - By default, additionalProperties are permitted.
