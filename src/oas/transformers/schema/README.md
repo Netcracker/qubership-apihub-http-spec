@@ -1,6 +1,6 @@
 Based on https://github.com/openapi-contrib/openapi-schema-to-json-schema
-and specifically on https://github.com/openapi-contrib/openapi-schema-to-json-schema/blob/main/lib/converters/schema.js
-the above converter is the only one we actually used, while https://github.com/openapi-contrib/openapi-schema-to-json-schema/blob/main/lib/converters/parameter.js was never utilized
+and specifically on [https://github.com/openapi-contrib/openapi-schema-to-json-schema/blob/main/src/lib/converters/schema.ts](https://github.com/openapi-contrib/openapi-schema-to-json-schema/blob/main/src/lib/converters/schema.ts)
+the above converter is the only one we actually used, while [https://github.com/openapi-contrib/openapi-schema-to-json-schema/blob/main/src/lib/converters/parameter.ts](https://github.com/openapi-contrib/openapi-schema-to-json-schema/blob/main/src/lib/converters/parameter.ts) was never utilized
 
 ## Differences
 
