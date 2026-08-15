@@ -118,7 +118,7 @@ export const translateToBodyParameter = withContext<
 >(function (body, consumes) {
   const id = this.generateId.httpRequestBody({});
 
-  const examples = entries(body['x-examples'] || getExamplesFromSchema(body.schema)).map(([key, value]) =>
+  const examples = entries((body as any)['x-examples'] || getExamplesFromSchema(body.schema)).map(([key, value]) =>
     translateToDefaultExample.call(this, key, value),
   );
 
@@ -188,7 +188,7 @@ export const translateFromFormDataParameters = withContext<
   return parameters.reduce((body, parameter) => {
     const { schema = {}, description } = buildSchemaForParameter.call(this, parameter);
     delete schema.$schema;
-    delete schema['x-stoplight'];
+    delete (schema as any)['x-stoplight'];
 
     for (const content of body.contents) {
       if (typeof description === 'string' && description.length > 0) {
@@ -325,7 +325,7 @@ const buildSchemaForParameter: Oas2TranslateFunction<
 
     ...pickBy(
       {
-        deprecated: param['x-deprecated'],
+        deprecated: (param as any)['x-deprecated'],
       },
       isBoolean,
     ),

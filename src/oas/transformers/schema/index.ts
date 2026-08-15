@@ -49,7 +49,7 @@ export const translateSchemaObjectFromPair = withContext<
     if (!isReferenceObject(schema)) return {};
 
     const converted = convertSchema(this.document, schema, this.references);
-    converted['x-stoplight'] = {
+    (converted as any)['x-stoplight'] = {
       id: this.generateId.schema({ key: key ?? '' }),
     };
     return converted;
@@ -65,8 +65,8 @@ export const translateSchemaObjectFromPair = withContext<
   const id = this.generateId.schema({ key: key ?? '' });
 
   cached = convertSchema(this.document, maybeSchemaObject, this.references);
-  cached['x-stoplight'] = {
-    ...(isPlainObject(cached['x-stoplight']) && cached['x-stoplight']),
+  (cached as any)['x-stoplight'] = {
+    ...(isPlainObject((cached as any)['x-stoplight']) && (cached as any)['x-stoplight']),
     id,
   };
 
@@ -110,19 +110,19 @@ function _convertSchema(schema: OASSchemaObject, options: InternalOptions): JSON
   PROCESSED_SCHEMAS.set(schema, clonedSchema as JSONSchema7);
 
   for (const struct of options.structs) {
-    if (Array.isArray(clonedSchema[struct])) {
-      clonedSchema[struct] = clonedSchema[struct].slice();
+    if (Array.isArray((clonedSchema as any)[struct])) {
+      (clonedSchema as any)[struct] = (clonedSchema as any)[struct].slice();
 
-      for (let i = 0; i < clonedSchema[struct].length; i++) {
-        if (typeof clonedSchema[struct][i] === 'object' && clonedSchema[struct][i] !== null) {
-          clonedSchema[struct][i] = _convertSchema(clonedSchema[struct][i], options);
+      for (let i = 0; i < (clonedSchema as any)[struct].length; i++) {
+        if (typeof (clonedSchema as any)[struct][i] === 'object' && (clonedSchema as any)[struct][i] !== null) {
+          (clonedSchema as any)[struct][i] = _convertSchema((clonedSchema as any)[struct][i], options);
         } else {
-          clonedSchema[struct].splice(i, 1);
+          (clonedSchema as any)[struct].splice(i, 1);
           i--;
         }
       }
-    } else if (clonedSchema[struct] !== null && typeof clonedSchema[struct] === 'object') {
-      clonedSchema[struct] = _convertSchema(clonedSchema[struct], options);
+    } else if ((clonedSchema as any)[struct] !== null && typeof (clonedSchema as any)[struct] === 'object') {
+      (clonedSchema as any)[struct] = _convertSchema((clonedSchema as any)[struct], options);
     }
   }
 
@@ -148,10 +148,10 @@ function convertProperties(schema: OASSchemaObject, options: InternalOptions): v
   schema.properties = props;
 
   for (const key of Object.keys(props)) {
-    const property = props[key];
+    const property = (props as any)[key];
 
     if (isPlainObject(property)) {
-      props[key] = _convertSchema(property, options);
+      (props as any)[key] = _convertSchema(property, options);
     }
   }
 }

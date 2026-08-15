@@ -26,7 +26,7 @@ export function transformAsyncApiOperations(
     const value = document.channels?.[path];
     if (!isPlainObject(value)) return [];
 
-    const operations = ['publish', 'subscribe'].filter(method => value?.[method]);
+    const operations = ['publish', 'subscribe'].filter(method => (value as any)?.[method]);
 
     return operations.map(method =>
       transformAsyncApiOperation({
@@ -79,7 +79,7 @@ export const transformAsyncApiOperationBase: TranslateFunction<
     throw new Error(`Could not find ${['channels', path].join('/')} in the provided spec.`);
   }
 
-  const operation = this.maybeResolveLocalRef(pathObj[method]) as OperationObject;
+  const operation = this.maybeResolveLocalRef((pathObj as any)[method]) as OperationObject;
   if (!operation) {
     throw new Error(`Could not find ${['channels', path, method].join('/')} in the provided spec.`);
   }
@@ -101,7 +101,7 @@ export const transformAsyncApiOperationBase: TranslateFunction<
 
     ...pickBy(
       {
-        internal: operation['x-internal'],
+        internal: (operation as any)['x-internal'],
       },
       isBoolean,
     ),

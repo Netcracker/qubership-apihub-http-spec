@@ -56,7 +56,7 @@ export const transformOasOperation: TranslateFunction<
     throw new Error(`Could not find ${['paths', path, method].join('/')} in the provided spec.`);
   }
 
-  const serviceId = (this.ids.service = String(this.document['x-stoplight']?.id));
+  const serviceId = (this.ids.service = String((this.document as any)['x-stoplight']?.id));
   this.ids.path = this.generateId.httpPath({ parentId: serviceId, path });
   const operationId = (this.ids.operation = this.generateId.httpOperation({ parentId: serviceId, method, path }));
 

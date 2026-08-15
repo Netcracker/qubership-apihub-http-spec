@@ -6,6 +6,13 @@
   ],
   "compilerOptions": {
     "module": "commonjs",
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    // @stoplight/scripts/tsconfig.json sets "suppressImplicitAnyIndexErrors": true.
+    // TypeScript 5.5 removed that option and TS 6 rejects it outright (TS5102, a
+    // removal rather than a deprecation, so "ignoreDeprecations" does not apply).
+    // The base config lives in node_modules and cannot be edited, but overriding the
+    // value to false is accepted - TS only errors when it is set to true.
+    "suppressImplicitAnyIndexErrors": false,
+    "ignoreDeprecations": "6.0"
   },
 }

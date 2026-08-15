@@ -14,7 +14,7 @@ import { translateLogo } from './transformers/translateLogo';
 export const transformOasService: TranslateFunction<DeepPartial<OpenAPIObject> | DeepPartial<Spec>, [], IHttpService> =
   function () {
     const document = this.document;
-    const id = String(document['x-stoplight']?.id);
+    const id = String((document as any)['x-stoplight']?.id);
     this.ids.service = id;
     this.parentId = id;
 
@@ -41,7 +41,7 @@ export const transformOasService: TranslateFunction<DeepPartial<OpenAPIObject> |
 
       ...pickBy(
         {
-          internal: document['x-internal'],
+          internal: (document as any)['x-internal'],
         },
         isBoolean,
       ),

@@ -8,7 +8,7 @@ import type { Oas2ParamBase, Oas3ParamBase, ParamBase } from './types';
 export function hasXLogo(
   info: DeepPartial<OAS2.Info | OAS3.InfoObject>,
 ): info is DeepPartial<OAS2.Info | OAS3.InfoObject> & { 'x-logo': Record<string, unknown> } {
-  return isPlainObject(info['x-logo']);
+  return isPlainObject((info as any)['x-logo']);
 }
 
 const VALID_OAS3_PARAM_LOCATION: OAS3.ParameterLocation[] = ['query', 'header', 'path', 'cookie'];

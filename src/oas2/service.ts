@@ -88,8 +88,8 @@ export const transformOas2Service: Oas2HttpServiceTransformer = ({ document, ctx
             if (ss && ss.type === 'oauth2') {
               const flows = {};
               for (const flowKey in ss.flows) {
-                const flow = ss.flows[flowKey];
-                flows[flowKey] = {
+                const flow = (ss.flows as any)[flowKey];
+                (flows as any)[flowKey] = {
                   ...flow,
                   scopes: pickBy(flow.scopes, (_val: string, scopeKey: string) => {
                     const secKey = sec[key];

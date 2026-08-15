@@ -85,7 +85,7 @@ export const translateToSharedParameters = withContext<
     const kind = getComponentName(this.references, resolvable.$ref);
     if (kind === void 0 || !(kind in sharedParameters)) continue;
 
-    sharedParameters[kind].push(resolvable);
+    (sharedParameters as any)[kind].push(resolvable);
   }
 
   return sharedParameters;
