@@ -13,6 +13,9 @@
     // The base config lives in node_modules and cannot be edited, but overriding the
     // value to false is accepted - TS only errors when it is set to true.
     "suppressImplicitAnyIndexErrors": false,
-    "ignoreDeprecations": "6.0"
+    // The base config also sets "moduleResolution": "node", which TypeScript 7 removed
+    // (TS5108). Same situation as the option above: node_modules cannot be edited, so it is
+    // overridden here. 'bundler' because sl-scripts bundles this package.
+    "moduleResolution": "bundler"
   },
 }

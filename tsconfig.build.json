@@ -13,7 +13,7 @@
     "outDir": "dist",
     // TypeScript 6 requires rootDir to be explicit whenever outDir is set (TS5011).
     "rootDir": "src",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "target": "ES2019"
   }
 }
