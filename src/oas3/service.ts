@@ -15,6 +15,7 @@ import type { ArrayCallbackParameters } from '../types';
 import { entries } from '../utils';
 import { isSecurityScheme } from './guards';
 import { transformOas3Operations } from './operation';
+import { translateToSharedCallbacks } from './transformers/callbacks';
 import { translateToExample } from './transformers/examples';
 import { translateToSharedParameters } from './transformers/parameters';
 import { translateRequestBody } from './transformers/request';
@@ -37,6 +38,7 @@ export const bundleOas3Service: Oas3HttpServiceBundle = ({ document: _document }
       securitySchemes: translateSecurityScheme,
     }),
     ...translateToSharedParameters.call(ctx, document.components),
+    callbacks: translateToSharedCallbacks.call(ctx, document.components?.callbacks),
   };
 
   const operations = transformOas3Operations(document, ctx) as unknown as IHttpOperation<true>[];
